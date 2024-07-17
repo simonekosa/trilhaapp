@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import './main_page.dart';
 
-
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -12,10 +11,17 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   var emailController = TextEditingController(text: "");
-  var senhaController = TextEditingController(text: "");  
+  var senhaController = TextEditingController(text: "");
   bool esconderSenha = true;
 
   final Logger logger = Logger();
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    senhaController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +48,7 @@ class _LoginPageState extends State<LoginPage> {
                         'lib/images/logo_login.png',
                       ),
                     ),
-                    Expanded(child: Container()),                    
+                    Expanded(child: Container()),
                   ],
                 ),
                 const Text(
@@ -66,7 +72,7 @@ class _LoginPageState extends State<LoginPage> {
                   alignment: Alignment.center,
                   child: TextField(
                     controller: emailController,
-                    onChanged: (value){},                  
+                    onChanged: (value) {},
                     style: const TextStyle(color: Colors.pinkAccent),
                     decoration: const InputDecoration(
                         contentPadding: EdgeInsets.only(top: 0),
@@ -91,7 +97,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: TextField(
                     controller: senhaController,
                     obscureText: esconderSenha,
-                    onChanged: (value){},                      
+                    onChanged: (value) {},
                     style: const TextStyle(color: Colors.pinkAccent),
                     decoration: InputDecoration(
                       contentPadding: const EdgeInsets.only(top: 0),
@@ -101,21 +107,20 @@ class _LoginPageState extends State<LoginPage> {
                           borderSide: BorderSide(color: Colors.pinkAccent)),
                       prefixIcon: const Icon(Icons.lock, color: Colors.pink),
                       hintText: "Senha",
-                      hintStyle:
-                          const TextStyle(color: Colors.pinkAccent, fontSize: 14),
+                      hintStyle: const TextStyle(
+                          color: Colors.pinkAccent, fontSize: 14),
                       suffixIcon: InkWell(
-                        onTap: (){
+                        onTap: () {
                           setState(() {
                             esconderSenha = !esconderSenha;
-                          });                          
+                          });
                         },
                         child: Icon(
-                          esconderSenha
-                          ? Icons.visibility_off  
-                          : Icons.visibility,
-                         color: Colors.pink),
+                            esconderSenha
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                            color: Colors.pink),
                       ),
-                      
                     ),
                   ),
                 ),
@@ -130,43 +135,42 @@ class _LoginPageState extends State<LoginPage> {
                     width: double.infinity,
                     child: TextButton(
                         onPressed: () {
-                          if (
-                            emailController.text == "flutter@testedio.com.br" 
-                            && senhaController.text == "senha123"){
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content : Text("Olá, Seja bem vindo!",
-                                  style: TextStyle(                                  
-                                    color: Colors.white, 
-                                    fontWeight: FontWeight.w700)),
-                                  backgroundColor: Colors.pink,
-                                  shape: StadiumBorder(), 
-                                  behavior: SnackBarBehavior.floating,
-                                  margin: EdgeInsets.all(50),
-                                  elevation: 30,                                   
-                                )   
-                              );              
-                                       
-                                Navigator.pushReplacement(context, MaterialPageRoute(
-                                  builder: (context) =>
-                                  (const MainPage()),
-                                ),
-                              );                
-                           } else {
-                             ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                content : Text("Ops, usuário ou Senha inválidos!",                                 
-                                style: TextStyle(                                  
-                                  color: Colors.white, 
-                                  fontWeight: FontWeight.w700)),
-                                backgroundColor: Colors.pink,
-                                shape: StadiumBorder(), 
-                                behavior: SnackBarBehavior.floating,
-                                margin: EdgeInsets.all(50),
-                                elevation: 30,                               
-                                )   
-                              );                       
-                            }
+                          if (emailController.text ==
+                                  "flutter@testedio.com.br" &&
+                              senhaController.text == "senha123") {
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                              content: Text("Olá, Seja bem vindo!",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w700)),
+                              backgroundColor: Colors.pink,
+                              shape: StadiumBorder(),
+                              behavior: SnackBarBehavior.floating,
+                              margin: EdgeInsets.all(50),
+                              elevation: 30,
+                            ));
+
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => (const MainPage()),
+                              ),
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                              content: Text("Ops, usuário ou Senha inválidos!",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w700)),
+                              backgroundColor: Colors.pink,
+                              shape: StadiumBorder(),
+                              behavior: SnackBarBehavior.floating,
+                              margin: EdgeInsets.all(50),
+                              elevation: 30,
+                            ));
+                          }
                           debugPrint(emailController.text);
                           debugPrint(senhaController.text);
                         },
