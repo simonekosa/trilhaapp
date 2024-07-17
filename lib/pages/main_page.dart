@@ -4,7 +4,6 @@ import 'package:trilhaapp/pages/configuracoes.dart';
 import 'package:trilhaapp/pages/dados_cadastrais.dart';
 import 'package:trilhaapp/pages/pagina_evolucao.dart';
 import 'package:trilhaapp/pages/pagina_lista_tarefas.dart';
-
 import 'calcular_imc.dart';
 
 class MainPage extends StatefulWidget {
@@ -39,8 +38,14 @@ class _MainPageState extends State<MainPage> {
         drawer: Drawer(
           child: ListView(
             children: [
+              UserAccountsDrawerHeader(
+                  decoration: const BoxDecoration(color: Colors.pink),
+                  currentAccountPicture: CircleAvatar(
+                      child: Image.asset("lib/images/userimagem.jpg")),
+                  accountName: const Text("Simone Kosa"),
+                  accountEmail: const Text("simone_kosa@hotmail.com")),
               const SizedBox(
-                height: 200,
+                height: 2,
               ),
               const Divider(color: Colors.transparent),
               ListTile(
