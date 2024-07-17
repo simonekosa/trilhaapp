@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
+import './main_page.dart';
+
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -8,6 +11,12 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  var emailController = TextEditingController(text: "");
+  var senhaController = TextEditingController(text: "");  
+  bool esconderSenha = true;
+
+  final Logger logger = Logger();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -22,7 +31,7 @@ class _LoginPageState extends State<LoginPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(
-                  height: 15,
+                  height: 70,
                 ),
                 Row(
                   children: [
@@ -33,11 +42,11 @@ class _LoginPageState extends State<LoginPage> {
                         'lib/images/logo_login.png',
                       ),
                     ),
-                    Expanded(child: Container()),
+                    Expanded(child: Container()),                    
                   ],
                 ),
                 const Text(
-                  'Ja tem Cadastro?',
+                  'Já tem Cadastro?',
                   style: TextStyle(
                       fontSize: 26,
                       fontWeight: FontWeight.w700,
@@ -55,9 +64,11 @@ class _LoginPageState extends State<LoginPage> {
                   margin: const EdgeInsets.symmetric(horizontal: 30),
                   height: 30,
                   alignment: Alignment.center,
-                  child: const TextField(
-                    style: TextStyle(color: Colors.pinkAccent),
-                    decoration: InputDecoration(
+                  child: TextField(
+                    controller: emailController,
+                    onChanged: (value){},                  
+                    style: const TextStyle(color: Colors.pinkAccent),
+                    decoration: const InputDecoration(
                         contentPadding: EdgeInsets.only(top: 0),
                         enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: Colors.pinkAccent)),
@@ -77,19 +88,34 @@ class _LoginPageState extends State<LoginPage> {
                   margin: const EdgeInsets.symmetric(horizontal: 30),
                   height: 30,
                   alignment: Alignment.center,
-                  child: const TextField(
-                    style: TextStyle(color: Colors.pinkAccent),
+                  child: TextField(
+                    controller: senhaController,
+                    obscureText: esconderSenha,
+                    onChanged: (value){},                      
+                    style: const TextStyle(color: Colors.pinkAccent),
                     decoration: InputDecoration(
-                      contentPadding: EdgeInsets.only(top: 0),
-                      enabledBorder: UnderlineInputBorder(
+                      contentPadding: const EdgeInsets.only(top: 0),
+                      enabledBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.pinkAccent)),
-                      focusedBorder: UnderlineInputBorder(
+                      focusedBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.pinkAccent)),
-                      prefixIcon: Icon(Icons.lock, color: Colors.pink),
+                      prefixIcon: const Icon(Icons.lock, color: Colors.pink),
                       hintText: "Senha",
                       hintStyle:
-                          TextStyle(color: Colors.pinkAccent, fontSize: 14),
-                      suffixIcon: Icon(Icons.visibility, color: Colors.pink),
+                          const TextStyle(color: Colors.pinkAccent, fontSize: 14),
+                      suffixIcon: InkWell(
+                        onTap: (){
+                          setState(() {
+                            esconderSenha = !esconderSenha;
+                          });                          
+                        },
+                        child: Icon(
+                          esconderSenha
+                          ? Icons.visibility_off  
+                          : Icons.visibility,
+                         color: Colors.pink),
+                      ),
+                      
                     ),
                   ),
                 ),
@@ -103,12 +129,52 @@ class _LoginPageState extends State<LoginPage> {
                   child: SizedBox(
                     width: double.infinity,
                     child: TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          if (
+                            emailController.text == "flutter@testedio.com.br" 
+                            && senhaController.text == "senha123"){
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content : Text("Olá, Seja bem vindo!",
+                                  style: TextStyle(                                  
+                                    color: Colors.white, 
+                                    fontWeight: FontWeight.w700)),
+                                  backgroundColor: Colors.pink,
+                                  shape: StadiumBorder(), 
+                                  behavior: SnackBarBehavior.floating,
+                                  margin: EdgeInsets.all(50),
+                                  elevation: 30,                                   
+                                )   
+                              );              
+                                       
+                                Navigator.pushReplacement(context, MaterialPageRoute(
+                                  builder: (context) =>
+                                  (const MainPage()),
+                                ),
+                              );                
+                           } else {
+                             ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                content : Text("Ops, usuário ou Senha inválidos!",                                 
+                                style: TextStyle(                                  
+                                  color: Colors.white, 
+                                  fontWeight: FontWeight.w700)),
+                                backgroundColor: Colors.pink,
+                                shape: StadiumBorder(), 
+                                behavior: SnackBarBehavior.floating,
+                                margin: EdgeInsets.all(50),
+                                elevation: 30,                               
+                                )   
+                              );                       
+                            }
+                          debugPrint(emailController.text);
+                          debugPrint(senhaController.text);
+                        },
                         style: ButtonStyle(
                             backgroundColor:
                                 WidgetStateProperty.all(Colors.pinkAccent)),
                         child: const Text(
-                          'Login',
+                          'LOGIN',
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 16,
