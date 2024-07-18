@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:trilhaapp/pages/configuracoes.dart';
-import 'package:trilhaapp/pages/dados_cadastrais.dart';
-import 'package:trilhaapp/pages/pagina_evolucao.dart';
-import 'package:trilhaapp/pages/pagina_lista_tarefas.dart';
-import 'calcular_imc.dart';
+import '../componentes/custom_drawer.dart';
+
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -35,86 +32,7 @@ class _MainPageState extends State<MainPage> {
             bottom: Radius.circular(30),
           )),
         ),
-        drawer: Drawer(
-          child: ListView(
-            children: [
-              UserAccountsDrawerHeader(
-                  decoration: const BoxDecoration(color: Colors.pink),
-                  currentAccountPicture: CircleAvatar(
-                      child: Image.asset("lib/images/userimagem.jpg")),
-                  accountName: const Text("Simone Kosa"),
-                  accountEmail: const Text("simone_kosa@hotmail.com")),
-              const SizedBox(
-                height: 2,
-              ),
-              const Divider(color: Colors.transparent),
-              ListTile(
-                leading: const Icon(Icons.home),
-                iconColor: Colors.pink,
-                title: const Text("Dados Cadastrais"),
-                tileColor: const Color.fromARGB(14, 233, 30, 98),
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const DadosCadastraisPage()));
-                },
-              ),
-              const Divider(color: Colors.transparent),
-              ListTile(
-                leading: const Icon(Icons.home),
-                iconColor: Colors.pink,
-                title: const Text("Calcular Imc"),
-                tileColor: const Color.fromARGB(14, 233, 30, 98),
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const CalcularImcPage()));
-                },
-              ),
-              const Divider(color: Colors.transparent),
-              ListTile(
-                leading: const Icon(Icons.home),
-                iconColor: Colors.pink,
-                title: const Text("Listar Resultados"),
-                tileColor: const Color.fromARGB(14, 233, 30, 98),
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const PaginaEvolucao()));
-                },
-              ),
-              const Divider(color: Colors.transparent),
-              ListTile(
-                leading: const Icon(Icons.home),
-                iconColor: Colors.pink,
-                title: const Text("Listar Tarefas"),
-                tileColor: const Color.fromARGB(14, 233, 30, 98),
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const ListaTarefasPage()));
-                },
-              ),
-              const Divider(color: Colors.transparent),
-              ListTile(
-                leading: const Icon(Icons.home),
-                iconColor: Colors.pink,
-                title: const Text("Configurações"),
-                tileColor: const Color.fromARGB(14, 233, 30, 98),
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const ConfiguracoesPage()));
-                },
-              ),
-            ],
-          ),
-        ),
+        drawer: const CustomDrawer(),
       ),
     );
   }
